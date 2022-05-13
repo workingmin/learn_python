@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-flask run -h 0.0.0.0 -p 5000
+flask run -h 0.0.0.0 -p 5000 --debugger
 """
 
 import os
@@ -31,8 +31,6 @@ def create_app(name=__name__):
         os.mkdir(logdir)
     logfile = os.path.join(logdir, 'app.log')
     handler = TimedRotatingFileHandler(logfile, when="D", encoding="UTF-8")
-    
-    app.debug = True
     app.logger.addHandler(handler)
     handler.setFormatter(formatter)
     return app
