@@ -5,6 +5,7 @@ import yaml
 import xmltodict
 from jenkins import Jenkins
 
+
 def update_dictionary(dictionary, key, value):
     for k, v in dictionary.items():
         if k == key:
@@ -14,12 +15,13 @@ def update_dictionary(dictionary, key, value):
             dictionary[k] = update_dictionary(v, key, value)
     return dictionary
 
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print("Usage: " + sys.argv[0] + " <yaml_config>")
         print(" example: " + sys.argv[0] + " config.yml")
         sys.exit(0)
-        
+
     yaml_config = sys.argv[1]
     with open(yaml_config, 'r') as f:
         data = f.read()
@@ -31,7 +33,7 @@ if __name__ == '__main__':
         project = config['project']
         git_repository = config['git_repository']
         template_project = config['template_project']
-        
+
     url = protocol + "://" + user + ":" + token + "@" + host
     j = Jenkins(url)
     if not j.job_exists(project):
