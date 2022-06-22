@@ -5,7 +5,7 @@ flask run -h 0.0.0.0 -p 5000 --debugger
 """
 
 import os
-from flask import Flask
+from flask import Flask, request, abort
 from werkzeug.utils import find_modules, import_string
 from logging import Formatter
 from logging.handlers import TimedRotatingFileHandler
@@ -33,9 +33,17 @@ def create_app(name=__name__):
     handler = TimedRotatingFileHandler(logfile, when="D", encoding="UTF-8")
     app.logger.addHandler(handler)
     handler.setFormatter(formatter)
+    
+    @app.before_request
+    def before_request():
+        if request.remote_addr != '127.0.0.1':
+            abort(404)    
+        
     return app
 
+
 app = create_app()
+
 
 if __name__ == '__main__':
     app.run()
