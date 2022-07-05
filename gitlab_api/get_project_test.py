@@ -18,7 +18,7 @@ if __name__ == '__main__':
         url = config['url']
         private_token = config['private_token']
         project_name = config['project_name']
-    
+
     gl = Gitlab(url=url, private_token=private_token)
     project = None
     try:

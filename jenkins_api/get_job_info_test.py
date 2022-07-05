@@ -20,14 +20,12 @@ if __name__ == '__main__':
         user = config['user']
         token = config['token']
         job = config['job']
-        number = config['number']
 
     url = protocol + "://" + user + ":" + token + "@" + host
     j = Jenkins(url)
     if j.job_exists(job):
         try:
-            output = j.get_build_console_output(job, number)
+            j.build_job(job)
         except Exception as e:
-            print("get job console output failure, {}".format(e))
+            print("build job failure, {}".format(e))
             sys.exit(1)
-    print(output)
